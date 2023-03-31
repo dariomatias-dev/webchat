@@ -1,5 +1,5 @@
-import { useState, useContext, createContext, useEffect } from "react";
-import { User } from "firebase/auth";
+import { useState, useContext, createContext, useEffect } from 'react';
+import { User } from 'firebase/auth';
 import { auth, onAuthStateChanged } from '@/services/firebase';
 
 type ContextDataProps = {
@@ -28,7 +28,8 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
     }, []);
 
     useEffect(() => {
-        console.log(user)
+        if (JSON.stringify(user) !== '{}')
+            console.log(user.displayName, user.email);
     }, [user]);
 
     return (

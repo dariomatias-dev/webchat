@@ -1,9 +1,8 @@
-import Chat from "@/components/Chat";
-import SignIn from "@/components/SignIn";
+import SignIn from '@/components/SignIn';
 
 const Home = () => {
   return (
-    <div className="flex justify-center">
+    <div className='flex justify-center'>
       <SignIn />
     </div>
   );
