@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { User } from 'firebase/auth';
 import styles from '../../styles/SignIn.module.scss';
 import { FcGoogle } from 'react-icons/fc';
 
 import { auth, signInWithPopup, GoogleAuthProvider } from '../../services/firebase';
 
+import { useData } from '../Context';
+
 const SignIn = () => {
-    const [user, setUser] = useState({} as User);
+    const { saveUser } = useData()
 
     const loginWithGoogle = () => {
         const provider = new GoogleAuthProvider;
 
         signInWithPopup(auth, provider)
             .then(result => {
-                setUser(result.user);
+                saveUser(result.user);
             })
             .catch(err => {
                 console.log(err);
