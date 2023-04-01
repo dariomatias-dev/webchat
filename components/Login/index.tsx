@@ -5,6 +5,9 @@ import { BsGoogle } from 'react-icons/bs';
 import { auth, signInWithPopup, GoogleAuthProvider } from '../../services/firebase';
 
 import { useData } from '../Context';
+import WelcomeImage from '../WelcomeImage';
+
+const imageMessage = 'Faça login para acessar o WebChat.'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -27,26 +30,7 @@ const Login = () => {
     return (
         <div className={styles.background}>
             <div className='flex w-[800px] h-[500px] rounded-xl overflow-hidden'>
-                <div className='relative flex justify-center items-center w-2/4'>
-                    <div className='h-full'>
-                        <img
-                            src='./images/welcome.jpg'
-                            alt=''
-                            className='h-full'
-                        />
-
-                        <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-40' />
-                    </div>
-
-                    <div className='absolute flex flex-col gap-2'>
-                        <h1 className='text-4xl font-bold'>
-                            Bem vindo(a)!
-                        </h1>
-                        <p>
-                            Faça login para acessar o Webchat.
-                        </p>
-                    </div>
-                </div>
+                <WelcomeImage message={imageMessage} />
 
                 <div className='w-2/4 flex justify-center items-center bg-[#1C1C1C]'>
                     <div className='w-full px-8'>
