@@ -1,9 +1,9 @@
-import SignIn from '@/components/SignIn';
+import Login from '@/components/Login';
 
 const Home = () => {
   return (
     <div className='flex justify-center'>
-      <SignIn />
+      <Login />
     </div>
   );
 };
