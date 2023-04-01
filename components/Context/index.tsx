@@ -1,10 +1,11 @@
 import { useState, useContext, createContext, useEffect } from 'react';
 import { User } from 'firebase/auth';
-import { auth, onAuthStateChanged } from '@/services/firebase';
+import { auth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from '@/services/firebase';
 
 type ContextDataProps = {
     user: User;
     saveUser: (data: User) => void;
+    loginCreateAccountWithGoogle: () => void;
 };
 
 const ContextData = createContext({} as ContextDataProps);
@@ -18,6 +19,18 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
 
     const saveUser = (data: User) => {
         setUser(data);
+    };
+
+    const loginCreateAccountWithGoogle = () => {
+        const provider = new GoogleAuthProvider;
+
+        signInWithPopup(auth, provider)
+            .then(result => {
+                saveUser(result.user);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     useEffect(() => {
@@ -36,6 +49,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
         <ContextData.Provider value={{
             user,
             saveUser,
+            loginCreateAccountWithGoogle,
         }}>
             {children}
         </ContextData.Provider>
