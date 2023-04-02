@@ -1,9 +1,10 @@
+import Link from 'next/link';
 import styles from '../../styles/Login.module.scss';
 import { BsGoogle } from 'react-icons/bs';
 
 import { useData } from '../Context';
-import WelcomeImage from '../WelcomeImage';
 import Form from '../Form';
+import WelcomeImage from '../WelcomeImage';
 
 const screenMessages = {
     login: {
@@ -14,7 +15,7 @@ const screenMessages = {
             parte2: 'Crie uma agora',
         },
     },
-    signIn: {
+    createUser: {
         welcome: 'Crie uma conta para acessar o WebChat.',
         connect: 'Ou criar com',
         changeScreen: {
@@ -26,7 +27,7 @@ const screenMessages = {
 
 type Props = {
     screen: string;
-    formData: (email: string, password: string) => void;
+    formData: (email: string, password: string, name?: string) => void;
 };
 
 const LoginCreateScreen = ({ screen, formData }: Props) => {
@@ -72,9 +73,16 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                             </button>
                         </div>
 
-                        <p className='text-zinc-400 text-sm text-center mt-4'>
+                        <p className='flex justify-center gap-1 text-zinc-400 text-sm text-center mt-4'>
                             {screenMessages[screen as keyof typeof screenMessages].changeScreen.part1}
-                            <span className='text-blue-700'> {screenMessages[screen as keyof typeof screenMessages].changeScreen.parte2}</span>
+                            <Link
+                                href={screen === 'login' ? '/CreateUser' : '/Login'}
+                                legacyBehavior
+                            >
+                                <a className='text-blue-700'>
+                                    {screenMessages[screen as keyof typeof screenMessages].changeScreen.parte2}
+                                </a>
+                            </Link>
                         </p>
                     </div>
                 </div>

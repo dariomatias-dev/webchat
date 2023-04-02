@@ -1,12 +1,12 @@
 import { auth, createUserWithEmailAndPassword } from '@/services/firebase';
 
-import { useData } from '../Context';
-import LoginCreateScreen from './../LoginCreateScreen';
+import { useData } from '../components/Context';
+import LoginCreateScreen from '../components/LoginCreateScreen';
 
 const SignIn = () => {
     const { saveUserUid } = useData();
 
-    const singnInData = (email: string, password: string) => {
+    const singnInData = (email: string, password: string, name?: string) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 saveUserUid(userCredential.user.uid);
@@ -18,7 +18,7 @@ const SignIn = () => {
 
     return (
         <LoginCreateScreen
-            screen='signIn'
+            screen='createUser'
             formData={singnInData}
         />
     );

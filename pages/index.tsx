@@ -1,9 +1,11 @@
-import SignIn from '@/components/SignIn';
+import Link from 'next/link';
 
 const Home = () => {
   return (
     <div className='flex justify-center'>
-      <SignIn />
+      <Link href='/Login'>
+        Ir
+      </Link>
     </div>
   );
 };

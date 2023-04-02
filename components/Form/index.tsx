@@ -1,20 +1,26 @@
 import { useState, FormEvent } from 'react';
 
 type Props = {
-    formData: (email: string, password: string) => void;
     screen: string;
+    formData: (email: string, password: string, name?: string) => void;
 }
 
 const Form = ({ formData, screen }: Props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [keepConnected, setkeepConnected] = useState(false);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        setName('');
+        setEmail('');
+        setPassword('');
+
         formData(
             email,
             password,
+            name,
         );
     };
 
@@ -37,6 +43,7 @@ const Form = ({ formData, screen }: Props) => {
                         <input
                             type='text'
                             placeholder='Dário Matias'
+                            value={name}
                             onChange={e => setName(e.target.value)}
                             className='bg-transparent border border-zinc-400 rounded-md outline-none px-2 py-1'
                         />
@@ -49,6 +56,7 @@ const Form = ({ formData, screen }: Props) => {
                 <input
                     type='email'
                     placeholder='exemplo@gmail.com'
+                    value={email}
                     onChange={e => setEmail(e.target.value)}
                     className='bg-transparent border border-zinc-400 rounded-md outline-none px-2 py-1'
                 />
@@ -59,6 +67,7 @@ const Form = ({ formData, screen }: Props) => {
                     type='password'
                     placeholder='•••••••••••'
                     autoComplete='off'
+                    value={password}
                     onChange={e => setPassword(e.target.value)}
                     className='bg-transparent border border-zinc-400 rounded-md outline-none px-2 py-1'
                 />
@@ -69,6 +78,7 @@ const Form = ({ formData, screen }: Props) => {
                     <label className='flex items-center gap-1 text-zinc-400 text-sm mt-4'>
                         <input
                             type="checkbox"
+                            onChange={e => setkeepConnected(e.target.checked)}
                             className='w-[14px] h-[14px] mt-[2px]'
                         />
                         Manter conectado após sair

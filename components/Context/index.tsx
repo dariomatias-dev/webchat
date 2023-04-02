@@ -41,7 +41,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
 
     useEffect(() => {
         if (userUid)
-            console.log(userUid);
+            console.log(userUid)
     }, [userUid]);
 
     return (
