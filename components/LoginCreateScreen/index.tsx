@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from '../../styles/Login.module.scss';
 import { BsGoogle } from 'react-icons/bs';
 
@@ -27,12 +26,10 @@ const screenMessages = {
 
 type Props = {
     screen: string;
+    formData: (email: string, password: string) => void;
 };
 
-const LoginCreateScreen = ({ screen }: Props) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
+const LoginCreateScreen = ({ screen, formData }: Props) => {
     const { loginCreateAccountWithGoogle } = useData();
 
     return (
@@ -43,20 +40,22 @@ const LoginCreateScreen = ({ screen }: Props) => {
                 <div className='w-2/4 flex justify-center items-center bg-[#1C1C1C]'>
                     <div className='w-full px-8'>
                         <Form
-                            setEmail={setEmail}
-                            setPassword={setPassword}
+                            formData={formData}
+                            screen={screen}
                         />
 
                         {
                             screen === 'login' && (
-                                <p className='text-blue-700 text-sm text-end my-5'>
+                                <p className='text-blue-700 text-sm text-end mt-5'>
                                     Esqueceu a senha?
                                 </p>
                             )
                         }
 
-
-                        <div className='relative flex justify-center items-center'>
+                        <div
+                            style={screen === 'login' ? { marginTop: '20px' } : { marginTop: '32px' }}
+                            className='relative flex justify-center items-center'
+                        >
                             <span className='w-full inline-block h-px bg-zinc-600 mt-[3px]' />
                             <p className='absolute bg-[#1C1C1C] text-zinc-500 text-sm px-1'>
                                 {screenMessages[screen as keyof typeof screenMessages].connect}

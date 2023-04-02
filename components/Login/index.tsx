@@ -1,8 +1,15 @@
 import LoginCreateScreen from "../LoginCreateScreen"
 
 const Login = () => {
+    const loginData= (email: string, password: string) => {
+
+    };
+
     return (
-        <LoginCreateScreen screen='login' />
+        <LoginCreateScreen
+            screen='login'
+            formData={loginData}
+        />
     );
 };
 

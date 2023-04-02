@@ -1,10 +1,9 @@
 import { useState, useContext, createContext, useEffect } from 'react';
-import { User } from 'firebase/auth';
 import { auth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from '@/services/firebase';
 
 type ContextDataProps = {
-    user: User;
-    saveUser: (data: User) => void;
+    userUid: string;
+    saveUserUid: (uid: string) => void;
     loginCreateAccountWithGoogle: () => void;
 };
 
@@ -15,10 +14,10 @@ type ProviderDataProps = {
 }
 
 export const ProviderData = ({ children }: ProviderDataProps) => {
-    const [user, setUser] = useState({} as User);
+    const [userUid, setUserUid] = useState('');
 
-    const saveUser = (data: User) => {
-        setUser(data);
+    const saveUserUid = (uid: string) => {
+        setUserUid(uid);
     };
 
     const loginCreateAccountWithGoogle = () => {
@@ -26,7 +25,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
 
         signInWithPopup(auth, provider)
             .then(result => {
-                saveUser(result.user);
+                saveUserUid(result.user.uid);
             })
             .catch(err => {
                 console.log(err);
@@ -36,19 +35,19 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
     useEffect(() => {
         onAuthStateChanged(auth, userData => {
             if (userData)
-                setUser(userData)
+                setUserUid(userData.uid)
         });
     }, []);
 
     useEffect(() => {
-        if (JSON.stringify(user) !== '{}')
-            console.log(user.displayName, user.email);
-    }, [user]);
+        if (userUid)
+            console.log(userUid);
+    }, [userUid]);
 
     return (
         <ContextData.Provider value={{
-            user,
-            saveUser,
+            userUid,
+            saveUserUid,
             loginCreateAccountWithGoogle,
         }}>
             {children}
