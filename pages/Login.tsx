@@ -1,13 +1,15 @@
 import { auth, signInWithEmailAndPassword } from '@/services/firebase';
 
 import { useData } from '@/components/Context';
-import LoginCreateScreen from "../components/LoginCreateScreen"
+import LoginCreateScreen from "../components/LoginCreateScreen";
+
+import { FormDataProps } from '@/@types/FormDataProps';
 
 const Login = () => {
     const { saveUserUid } = useData();
 
-    const loginData = (email: string, password: string) => {
-        signInWithEmailAndPassword(auth, email, password)
+    const loginData = (data: FormDataProps) => {
+        signInWithEmailAndPassword(auth, data.email, data.password)
             .then(userCredential => {
                 saveUserUid(userCredential.user.uid);
             })

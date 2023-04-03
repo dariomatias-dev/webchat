@@ -6,6 +6,8 @@ import { useData } from '../Context';
 import Form from '../Form';
 import WelcomeImage from '../WelcomeImage';
 
+import { FormDataProps } from '@/@types/FormDataProps';
+
 const screenMessages = {
     login: {
         welcome: 'Faça login para acessar o WebChat.',
@@ -27,7 +29,7 @@ const screenMessages = {
 
 type Props = {
     screen: string;
-    formData: (email: string, password: string, name?: string) => void;
+    formData: (data: FormDataProps) => void;
 };
 
 const LoginCreateScreen = ({ screen, formData }: Props) => {
@@ -38,7 +40,10 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
             <div className='flex w-[800px] h-[550px] rounded-xl overflow-hidden'>
                 <WelcomeImage message={screenMessages[screen as keyof typeof screenMessages].welcome} />
 
-                <div className='w-2/4 flex justify-center bg-[#1C1C1C] overflow-auto'>
+                <div
+                    style={screen === 'login' ? { alignItems: 'center' } : {}}
+                    className='w-2/4 flex justify-center bg-[#1C1C1C] overflow-auto'
+                >
                     <div className='w-full px-8'>
                         <Form
                             formData={formData}
@@ -64,7 +69,7 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                         </div>
 
                         <div
-                            style={screen === 'login' ? { marginTop: '36px', marginBottom: '24px' } : { marginTop: '20px', marginBottom: '8px' }}
+                            style={screen === 'login' ? { marginTop: '28px', marginBottom: '16px' } : { marginTop: '20px', marginBottom: '8px' }}
                             className='flex justify-center gap-4'
                         >
                             <button
