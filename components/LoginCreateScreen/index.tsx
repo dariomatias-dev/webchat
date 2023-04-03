@@ -35,10 +35,10 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
 
     return (
         <div className={styles.background}>
-            <div className='flex w-[800px] h-[500px] rounded-xl overflow-hidden'>
+            <div className='flex w-[800px] h-[550px] rounded-xl overflow-hidden'>
                 <WelcomeImage message={screenMessages[screen as keyof typeof screenMessages].welcome} />
 
-                <div className='w-2/4 flex justify-center items-center bg-[#1C1C1C]'>
+                <div className='w-2/4 flex justify-center bg-[#1C1C1C] overflow-auto'>
                     <div className='w-full px-8'>
                         <Form
                             formData={formData}
@@ -54,7 +54,7 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                         }
 
                         <div
-                            style={screen === 'login' ? { marginTop: '20px' } : { marginTop: '32px' }}
+                            style={screen === 'login' ? { marginTop: '20px' } : { marginTop: '24px' }}
                             className='relative flex justify-center items-center'
                         >
                             <span className='w-full inline-block h-px bg-zinc-600 mt-[3px]' />
@@ -63,7 +63,10 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                             </p>
                         </div>
 
-                        <div className='flex justify-center gap-4 mt-6'>
+                        <div
+                            style={screen === 'login' ? { marginTop: '36px', marginBottom: '24px' } : { marginTop: '20px', marginBottom: '8px' }}
+                            className='flex justify-center gap-4'
+                        >
                             <button
                                 type='button'
                                 onClick={loginCreateAccountWithGoogle}
@@ -73,7 +76,7 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                             </button>
                         </div>
 
-                        <p className='flex justify-center gap-1 text-zinc-400 text-sm text-center mt-4'>
+                        <p className='flex justify-center gap-1 text-zinc-400 text-sm text-center pb-4'>
                             {screenMessages[screen as keyof typeof screenMessages].changeScreen.part1}
                             <Link
                                 href={screen === 'login' ? '/CreateUser' : '/Login'}

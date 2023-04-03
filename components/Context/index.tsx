@@ -25,6 +25,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
 
         signInWithPopup(auth, provider)
             .then(result => {
+                console.log(result.user)
                 saveUserUid(result.user.uid);
             })
             .catch(err => {
@@ -33,10 +34,11 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
     };
 
     useEffect(() => {
-        onAuthStateChanged(auth, userData => {
-            if (userData)
-                setUserUid(userData.uid)
-        });
+        if (userUid)
+            onAuthStateChanged(auth, userData => {
+                if (userData)
+                    setUserUid(userData.uid)
+            });
     }, []);
 
     useEffect(() => {
