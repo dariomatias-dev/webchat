@@ -1,29 +1,40 @@
-import { auth, createUserWithEmailAndPassword } from '@/services/firebase';
+import { auth, createUserWithEmailAndPassword, db, collection, getDocs, query, where } from '@/services/firebase';
 
 import { useData } from '../components/Context';
 import LoginCreateScreen from '../components/LoginCreateScreen';
 
 import { FormDataProps } from '@/@types/FormDataProps';
 
-const SignIn = () => {
-    const { saveUserUid } = useData();
+const CreateUser = () => {
+    const { registerUser } = useData();
 
-    const singnInData = (data: FormDataProps) => {
-        createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then(userCredential => {
-                saveUserUid(userCredential.user.uid);
-            })
-            .catch(err => {
-                console.log(err)
-            });
+    const createUserData = async (data: FormDataProps) => {
+        let createUser = true;
+        const registeredEmail = await getDocs(query(collection(db, 'users'), where('email', '==', data.email)));
+        registeredEmail.forEach(() => createUser = false);
+
+        if (createUser)
+            createUserWithEmailAndPassword(auth, data.email, data.password)
+                .then(userCredential => {
+                    const dataUser = {
+                        uid: userCredential.user.uid,
+                        name: userCredential.user.displayName || data.name || null,
+                        email: userCredential.user.email,
+                        photoUrl: userCredential.user.photoURL,
+                    };
+                    registerUser(dataUser);
+                })
+                .catch(err => {
+                    console.log(err)
+                });
     };
 
     return (
         <LoginCreateScreen
             screen='createUser'
-            formData={singnInData}
+            formData={createUserData}
         />
     );
 };
 
-export default SignIn;
+export default CreateUser;
