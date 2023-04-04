@@ -2,6 +2,9 @@ import { useState, useContext, createContext, useEffect } from 'react';
 import { auth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from '@/services/firebase';
 import { db, doc, collection, setDoc, getDocs, query, where } from '@/services/firebase';
 
+import { UserProps } from '@/@types/UserProps';
+import { UsersProps } from '@/@types/UsersProps';
+
 type DataUserProps = {
     uid: string;
     name: string | null;
@@ -12,6 +15,7 @@ type DataUserProps = {
 type ContextDataProps = {
     userUid: string;
     saveUserUid: (uid: string) => void;
+    users: UsersProps;
     registerUser: (dataUser: DataUserProps) => void;
     loginCreateAccountWithGoogle: () => void;
 };
@@ -24,6 +28,7 @@ type ProviderDataProps = {
 
 export const ProviderData = ({ children }: ProviderDataProps) => {
     const [userUid, setUserUid] = useState('');
+    const [users, setUsers] = useState({} as UsersProps);
 
     const saveUserUid = (uid: string) => {
         setUserUid(uid);
@@ -56,30 +61,39 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
     const registeredEmail = async (dataUser: DataUserProps) => {
         if (dataUser.email !== null) {
             let emailFound = false;
-            const users = await getDocs(query(collection(db, 'users'), where('email', '==', dataUser.email)));
-            users.forEach(() => emailFound = true);
-            if (!emailFound) registerUser(dataUser)
-            else console.log('email cadastrado');
+            const usersWithEmail = await getDocs(query(collection(db, 'users'), where('email', '==', dataUser.email)));
+            usersWithEmail.forEach(() => emailFound = true);
+            if (!emailFound) registerUser(dataUser);
         }
+    };
+
+    const searchUsers = async () => {
+        const usersData: UsersProps = {};
+        const docs = await getDocs(collection(db, 'users'));
+        docs.forEach(doc => {
+            const data = doc.data() as UserProps;
+            usersData[data.uid] = data;
+        });
+        setUsers(usersData);
     };
 
     useEffect(() => {
         if (userUid)
-            onAuthStateChanged(auth, userData => {
-                if (userData)
-                    saveUserUid(userData.uid);
-            });
-    }, []);
+            searchUsers();
+    }, [userUid]);
 
     useEffect(() => {
-        if (userUid)
-            console.log(userUid)
-    }, [userUid]);
+        onAuthStateChanged(auth, userData => {
+            if (userData)
+                saveUserUid(userData.uid);
+        });
+    }, []);
 
     return (
         <ContextData.Provider value={{
             userUid,
             saveUserUid,
+            users,
             registerUser,
             loginCreateAccountWithGoogle,
         }}>
