@@ -5,9 +5,9 @@ import Login from "@/components/Login";
 
 const Home = () => {
   const { screen } = useData();
-  console.log(screen)
+
   return (
-    <div className='flex justify-center'>
+    <div className='fixed top-0 left-0 w-full h-full flex justify-center bg-background-chat'>
       {screen === 'login' && <Login />}
       {screen === 'createUser' && <CreateUser />}
       {screen === 'chat' && <Chat />}

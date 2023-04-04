@@ -1,26 +1,72 @@
-import { db, collection, onSnapshot } from "@/services/firebase";
-import { addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { AiOutlineSend } from 'react-icons/ai';
 
+import { db, collection, addDoc, query, orderBy, limit, onSnapshot, getDocs } from "@/services/firebase";
+import { useData } from "../Context";
+
+type MessagesProps = {
+    userUid: string;
+    message: string;
+    send: Date;
+};
+
 const Chat = () => {
     const [content, setContent] = useState('');
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState<MessagesProps[]>([]);
+    const [enableMessagesUpdate, setEnableMessagesUpdate] = useState(false);
+
+    const { userUid } = useData();
 
     const sendMessage = () => {
-        addDoc(collection(db, 'messages'), { message: content });
+        addDoc(collection(db, 'messages'), {
+            userUid,
+            message: content,
+            send: new Date(),
+        });
         setContent('');
     };
 
     const searchMesages = async () => {
-        onSnapshot(collection(db, 'messages'), snapshot => {
-            let data: any = [];
-            snapshot.forEach(doc => {
-                data.push(doc.data());
+        const data: MessagesProps[] = [];
+        const q = query(collection(db, 'messages'), orderBy('send', 'asc'), limit(100))
+        await getDocs(q)
+            .then(result => {
+                result.forEach(doc => {
+                    data.push(doc.data() as MessagesProps);
+                });
+            })
+            .catch(err => {
+                console.log(err);
             });
-            setMessages(data);
-        });
+        setMessages(data);
+        setEnableMessagesUpdate(true);
     };
+
+    const updateMessages = async () => {
+        let message = {} as MessagesProps;
+        let registerLastMessage = false;
+        const q = query(collection(db, 'messages'), orderBy('send', 'desc'), limit(1));
+        onSnapshot(q, snapshot => {
+            snapshot.forEach(doc => {
+                message = doc.data() as MessagesProps;
+            });
+
+            if (registerLastMessage)
+                setMessages(prevState => {
+                    if (prevState.length === 100)
+                        prevState.shift();
+                    return [...prevState, message];
+                });
+            registerLastMessage = true;
+        });
+
+        setEnableMessagesUpdate(false);
+    };
+
+    useEffect(() => {
+        if (messages.length && enableMessagesUpdate)
+            updateMessages();
+    }, [messages, enableMessagesUpdate]);
 
     useEffect(() => {
         searchMesages();
@@ -28,8 +74,8 @@ const Chat = () => {
 
     return (
         <>
-            <div className="w-[600px] h-screen bg-[#060f14]">
-                <div className="w-full flex flex-col gap-4 p-20 bg-[#060f14]">
+            <div className="w-[600px] h-screen">
+                <div className="w-full h-full flex flex-col gap-4 p-10 bg-black overflow-auto pb-24">
                     {
                         messages.map((message: any, index) => {
                             return (
