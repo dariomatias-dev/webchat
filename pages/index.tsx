@@ -1,11 +1,13 @@
-import Link from 'next/link';
+import Chat from "@/components/Chat";
+import Login from "./Login";
+import { useData } from "@/components/Context";
 
 const Home = () => {
+  const { userUid } = useData();
+
   return (
     <div className='flex justify-center'>
-      <Link href='/Login'>
-        Ir
-      </Link>
+      {userUid ? <Chat /> : <Login />}
     </div>
   );
 };

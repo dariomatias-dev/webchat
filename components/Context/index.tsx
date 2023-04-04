@@ -1,6 +1,6 @@
 import { useState, useContext, createContext, useEffect } from 'react';
 import { auth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from '@/services/firebase';
-import { db, doc, collection, setDoc, getDocs, query, where } from '@/services/firebase';
+import { db, doc, collection, setDoc, getDocs, query, where, onSnapshot } from '@/services/firebase';
 
 import { UserProps } from '@/@types/UserProps';
 import { UsersProps } from '@/@types/UsersProps';
@@ -30,9 +30,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
     const [userUid, setUserUid] = useState('');
     const [users, setUsers] = useState({} as UsersProps);
 
-    const saveUserUid = (uid: string) => {
-        setUserUid(uid);
-    }
+    const saveUserUid = (uid: string) => setUserUid(uid);
 
     const registerUser = async (dataUser: DataUserProps) => {
         await setDoc(doc(db, 'users', dataUser.uid), dataUser);
@@ -67,26 +65,33 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
         }
     };
 
-    const searchUsers = async () => {
+    const searchUsers = (email: string) => {
         const usersData: UsersProps = {};
-        const docs = await getDocs(collection(db, 'users'));
-        docs.forEach(doc => {
-            const data = doc.data() as UserProps;
-            usersData[data.uid] = data;
+        onSnapshot(collection(db, 'users'), docs => {
+            const usersEmail: string[] = [];
+            docs.forEach(doc => {
+                const data = doc.data() as UserProps;
+                usersEmail.push(data.email);
+                usersData[data.uid] = data;
+            });
+
+            const userDoesNotExist = usersEmail.every(userEmail => {
+                return userEmail !== email;
+            });
+            if (userDoesNotExist || usersEmail.length) saveUserUid('');
         });
         setUsers(usersData);
     };
 
     useEffect(() => {
-        if (userUid)
-            searchUsers();
-    }, [userUid]);
-
-    useEffect(() => {
+        let email = '';
         onAuthStateChanged(auth, userData => {
-            if (userData)
+            if (userData) {
+                email = userData.email || '';
                 saveUserUid(userData.uid);
+            }
         });
+        searchUsers(email);
     }, []);
 
     return (
