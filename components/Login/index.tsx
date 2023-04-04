@@ -1,7 +1,7 @@
 import { auth, signInWithEmailAndPassword } from '@/services/firebase';
 
 import { useData } from '@/components/Context';
-import LoginCreateScreen from "../components/LoginCreateScreen";
+import LoginCreateScreen from "../LoginCreateScreen";
 
 import { FormDataProps } from '@/@types/FormDataProps';
 

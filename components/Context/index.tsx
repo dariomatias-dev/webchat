@@ -18,6 +18,8 @@ type ContextDataProps = {
     users: UsersProps;
     registerUser: (dataUser: DataUserProps) => void;
     loginCreateAccountWithGoogle: () => void;
+    screen: string;
+    registerScreen: (screenType: string) => void;
 };
 
 const ContextData = createContext({} as ContextDataProps);
@@ -29,6 +31,7 @@ type ProviderDataProps = {
 export const ProviderData = ({ children }: ProviderDataProps) => {
     const [userUid, setUserUid] = useState('');
     const [users, setUsers] = useState({} as UsersProps);
+    const [screen, setScreen] = useState('');
 
     const saveUserUid = (uid: string) => setUserUid(uid);
 
@@ -50,6 +53,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
                     photoUrl: result.user.photoURL,
                 };
                 registeredEmail(dataUser);
+                setScreen('chat');
             })
             .catch(err => {
                 console.log(err);
@@ -78,20 +82,31 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
             const userDoesNotExist = usersEmail.every(userEmail => {
                 return userEmail !== email;
             });
-            if (userDoesNotExist || usersEmail.length) saveUserUid('');
+            if (userDoesNotExist || !usersEmail.length) {
+                saveUserUid('');
+                setScreen('login');
+            } else {
+                setScreen('chat');
+            }
         });
         setUsers(usersData);
     };
 
+    const registerScreen = (screenType: string) => {
+        setScreen(screenType);
+    };
+
     useEffect(() => {
-        let email = '';
         onAuthStateChanged(auth, userData => {
+            let email = '';
             if (userData) {
                 email = userData.email || '';
                 saveUserUid(userData.uid);
+            } else {
+                setScreen('login');
             }
+            searchUsers(email);
         });
-        searchUsers(email);
     }, []);
 
     return (
@@ -101,6 +116,8 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
             users,
             registerUser,
             loginCreateAccountWithGoogle,
+            screen,
+            registerScreen,
         }}>
             {children}
         </ContextData.Provider>

@@ -1,13 +1,16 @@
 import Chat from "@/components/Chat";
-import Login from "./Login";
 import { useData } from "@/components/Context";
+import CreateUser from "@/components/CreateUser";
+import Login from "@/components/Login";
 
 const Home = () => {
-  const { userUid } = useData();
-
+  const { screen } = useData();
+  console.log(screen)
   return (
     <div className='flex justify-center'>
-      {userUid ? <Chat /> : <Login />}
+      {screen === 'login' && <Login />}
+      {screen === 'createUser' && <CreateUser />}
+      {screen === 'chat' && <Chat />}
     </div>
   );
 };

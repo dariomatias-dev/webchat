@@ -1,7 +1,7 @@
 import { auth, createUserWithEmailAndPassword, db, collection, getDocs, query, where } from '@/services/firebase';
 
-import { useData } from '../components/Context';
-import LoginCreateScreen from '../components/LoginCreateScreen';
+import { useData } from '../Context';
+import LoginCreateScreen from '../LoginCreateScreen';
 
 import { FormDataProps } from '@/@types/FormDataProps';
 

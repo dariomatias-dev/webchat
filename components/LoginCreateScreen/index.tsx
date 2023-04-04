@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import styles from '../../styles/Login.module.scss';
 import { BsGoogle } from 'react-icons/bs';
 
@@ -33,7 +32,7 @@ type Props = {
 };
 
 const LoginCreateScreen = ({ screen, formData }: Props) => {
-    const { loginCreateAccountWithGoogle } = useData();
+    const { loginCreateAccountWithGoogle, registerScreen } = useData();
 
     return (
         <div className={styles.background}>
@@ -83,14 +82,13 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
 
                         <p className='flex justify-center gap-1 text-zinc-400 text-sm text-center pb-4'>
                             {screenMessages[screen as keyof typeof screenMessages].changeScreen.part1}
-                            <Link
-                                href={screen === 'login' ? '/CreateUser' : '/Login'}
-                                legacyBehavior
+                            <button
+                                type='button'
+                                onClick={() => registerScreen(screen === 'login' ? 'createUser' : 'login')}
+                                className='text-blue-700'
                             >
-                                <a className='text-blue-700'>
-                                    {screenMessages[screen as keyof typeof screenMessages].changeScreen.parte2}
-                                </a>
-                            </Link>
+                                {screenMessages[screen as keyof typeof screenMessages].changeScreen.parte2}
+                            </button>
                         </p>
                     </div>
                 </div>
