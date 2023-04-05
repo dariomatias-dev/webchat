@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { AiOutlineSend } from 'react-icons/ai';
+import styles from '../../styles/InputWithValue.module.scss';
 
 import { db, collection, addDoc, query, orderBy, limit, onSnapshot, getDocs } from "@/services/firebase";
 import { useData } from "../Context";
@@ -83,7 +84,7 @@ const Chat = () => {
     return (
         <>
             <div className="w-[600px] h-screen">
-                <div ref={refChat} className="w-full h-full flex flex-col gap-6 pt-10 px-3 pb-24 bg-black overflow-auto scroll-smooth">
+                <div ref={refChat} className="w-full h-full flex flex-col gap-6 pt-10 px-3 pb-28 bg-black overflow-auto scroll-smooth">
                     {
                         messages.map((message: MessagesProps, index) => {
                             return (
@@ -120,18 +121,20 @@ const Chat = () => {
                 </div>
             </div>
 
-            <div className='fixed bottom-2 flex justify-center'>
-                <div className="relative">
+            <div className='fixed bottom-0 w-full'>
+                <div className='max-w-[600px] flex justify-center items-center gap-4 bg-[#080808] border-t-2 border-zinc-900 mx-auto py-3 px-5'>
                     <input
                         type='text'
                         value={content}
+                        placeholder="Mensagem"
                         onChange={e => setContent(e.target.value)}
-                        onKeyUp={e => { if (e.key === 'Enter') sendMessage() }}
-                        className='w-[550px] max-h-16 bg-[#272727] rounded-3xl text-lg outline-none pl-2 pr-12 py-5'
+                        onKeyUp={e => e.key === 'Enter' ? sendMessage() : ''}
+                        className={`${styles.input} max-w-[500px] w-[90%] max-h-14 bg-[#141414] text-lg border border-zinc-800 hover:border-zinc-700 focus:border-[#60a5fa] rounded-3xl outline-none px-2 py-5 transition duration-300`}
                     />
                     <AiOutlineSend
-                        onClick={sendMessage}
-                        className="w-8 h-8 absolute right-2 bottom-4"
+                        onClick={() => content ? sendMessage() : ''}
+                        style={content ? {} : { color: '#52525b'} }
+                        className="w-8 h-8 right-2 bottom-4 text-zinc-400 hover:text-white transition duration-300"
                     />
                 </div>
             </div>

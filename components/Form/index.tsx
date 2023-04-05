@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
-import styles from '../../styles/Form.module.scss';
+import styles from '../../styles/InputWithValue.module.scss';
 
 import { FormDataProps } from '@/@types/FormDataProps';
 
@@ -51,7 +51,7 @@ const Form = ({ formData, screen }: Props) => {
     return (
         <form onSubmit={handleSubmit(sendFormData)}>
             <h2
-                style={screen === 'createUser' ?  { marginTop: '24px', marginBottom: '12px' } : {}}
+                style={screen === 'createUser' ? { marginTop: '24px', marginBottom: '12px' } : {}}
                 className='text-2xl text-center font-bold'
             >
                 {formName}
