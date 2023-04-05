@@ -102,13 +102,13 @@ const Chat = () => {
                                     />
                                     <div
                                         style={userUid === message.userUid ? { backgroundColor: '#00b5e0', borderTopLeftRadius: '16px', borderTopRightRadius: '0' } : {}}
-                                        className="flex flex-col gap-2 max-w-[75%] bg-zinc-900 py-2 px-4 rounded-tr-2xl rounded-br-2xl rounded-bl-2xl"
+                                        className="flex flex-col max-w-[70%] bg-zinc-900 py-2 px-4 rounded-tr-2xl rounded-br-2xl rounded-bl-2xl"
                                     >
                                         <span
                                             style={userUid === message.userUid ? { color: '#FFFFFF' } : {}}
-                                            className='text-zinc-300'
+                                            className='text-zinc-300 text-end'
                                         >
-                                            {users[message.userUid]?.name || 'Dário Matias'}
+                                            {userUid === message.userUid ? 'Você' : users[message.userUid]?.name || 'User'}
                                         </span>
                                         <p>
                                             {message.message}
@@ -121,7 +121,7 @@ const Chat = () => {
                 </div>
             </div>
 
-            <div className='fixed bottom-0 w-full'>
+            <div className='fixed bottom-0 w-full select-none'>
                 <div className='max-w-[600px] flex justify-center items-center gap-4 bg-[#080808] border-t-2 border-zinc-900 mx-auto py-3 px-5'>
                     <input
                         type='text'
@@ -133,7 +133,7 @@ const Chat = () => {
                     />
                     <AiOutlineSend
                         onClick={() => content ? sendMessage() : ''}
-                        style={content ? {} : { color: '#52525b'} }
+                        style={content ? { cursor: 'pointer' } : { color: '#52525b', cursor: 'not-allowed' } }
                         className="w-8 h-8 right-2 bottom-4 text-zinc-400 hover:text-white transition duration-300"
                     />
                 </div>

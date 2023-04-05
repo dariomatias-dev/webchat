@@ -161,7 +161,7 @@ const Form = ({ formData, screen }: Props) => {
 
             {
                 screen === 'login' && (
-                    <label className='flex items-center gap-1 text-zinc-400 text-sm mt-4'>
+                    <label className='flex items-center gap-1 text-zinc-400 text-sm mt-4 cursor-pointer'>
                         <input
                             type="checkbox"
                             {...register('keepConnected')}
@@ -175,7 +175,7 @@ const Form = ({ formData, screen }: Props) => {
             <button
                 type='submit'
                 style={screen === 'login' ? { marginTop: '24px' } : { marginTop: '20px' }}
-                className='w-full bg-blue-500 font-bold py-2 px-4 rounded-lg'
+                className='w-full bg-blue-500 bg-opacity-90 hover:bg-opacity-100 font-bold py-2 px-4 rounded-lg transition duration-300'
             >
                 {formName}
             </button>

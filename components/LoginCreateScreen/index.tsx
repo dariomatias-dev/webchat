@@ -36,12 +36,14 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
 
     return (
         <div className={styles.background}>
-            <div className='flex w-[800px] h-[550px] rounded-xl overflow-hidden'>
-                <WelcomeImage message={screenMessages[screen as keyof typeof screenMessages].welcome} />
+            <div className='w-[850px] h-[550px] flex justify-center rounded-xl mx-8 select-none overflow-hidden'>
+                <div className='md:w-2/4 hidden md:flex'>
+                    <WelcomeImage message={screenMessages[screen as keyof typeof screenMessages].welcome} />
+                </div>
 
                 <div
                     style={screen === 'login' ? { alignItems: 'center' } : {}}
-                    className='w-2/4 flex justify-center bg-[#1C1C1C] overflow-auto'
+                    className='w-[400px] md:w-2/4 flex justify-center bg-[#1C1C1C] rounded-xl md:rounded-none overflow-auto'
                 >
                     <div className='w-full px-8'>
                         <Form
@@ -51,7 +53,7 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
 
                         {
                             screen === 'login' && (
-                                <p className='text-blue-700 text-sm text-end mt-5'>
+                                <p className='text-blue-700 hover:text-blue-600 text-sm text-end mt-5 transition duration-300'>
                                     Esqueceu a senha?
                                 </p>
                             )
@@ -74,9 +76,9 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                             <button
                                 type='button'
                                 onClick={loginCreateAccountWithGoogle}
-                                className='border border-zinc-500 rounded-lg p-3'
+                                className='border border-zinc-500 hover:border-zinc-400 rounded-lg p-3 group transition duration-300'
                             >
-                                <BsGoogle className='w-4 h-4 text-zinc-500' />
+                                <BsGoogle className='w-4 h-4 text-zinc-500 group-hover:text-zinc-400 transition duration-500' />
                             </button>
                         </div>
 
@@ -85,7 +87,7 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                             <button
                                 type='button'
                                 onClick={() => registerScreen(screen === 'login' ? 'createUser' : 'login')}
-                                className='text-blue-700'
+                                className='text-blue-700 hover:text-blue-600 transition duration-300'
                             >
                                 {screenMessages[screen as keyof typeof screenMessages].changeScreen.parte2}
                             </button>

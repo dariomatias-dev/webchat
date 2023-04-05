@@ -4,7 +4,7 @@ type Props = {
 
 const WelcomeImage = ({ message }: Props) => {
     return (
-        <div className='relative flex justify-center items-center text-center w-2/4'>
+        <div className='relative flex justify-center items-center text-center'>
             <div className='h-full'>
                 <img
                     src='./images/welcome.jpg'
