@@ -95,8 +95,8 @@ const Chat = () => {
                                 >
                                     <Image
                                         src={users[userUid].photoUrl}
-                                        width={1}
-                                        height={1}
+                                        width={1000}
+                                        height={1000}
                                         alt="User photo."
                                         className="w-10 h-10 rounded-full"
                                     />

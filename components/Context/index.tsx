@@ -111,7 +111,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
 
     useEffect(() => {
         fetchLastUser();
-    }, []);
+    });
 
     return (
         <ContextData.Provider value={{
