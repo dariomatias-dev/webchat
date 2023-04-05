@@ -133,7 +133,7 @@ const Chat = () => {
                     />
                     <AiOutlineSend
                         onClick={() => content ? sendMessage() : ''}
-                        style={content ? { cursor: 'pointer' } : { color: '#52525b', cursor: 'not-allowed' } }
+                        style={content ? { cursor: 'pointer' } : { color: '#52525b', cursor: 'not-allowed' }}
                         className="w-8 h-8 right-2 bottom-4 text-zinc-400 hover:text-white transition duration-300"
                     />
                 </div>

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Props = {
     message: string;
 }
@@ -5,11 +7,13 @@ type Props = {
 const WelcomeImage = ({ message }: Props) => {
     return (
         <div className='relative flex justify-center items-center text-center'>
-            <div className='h-full'>
-                <img
-                    src='./images/welcome.jpg'
+            <div className='w-full h-full'>
+                <Image
+                    src='/images/welcome.jpg'
+                    width={1000}
+                    height={1000}
                     alt=''
-                    className='h-full'
+                    className='w-full h-full bg-cover'
                 />
 
                 <div className='absolute top-0 left-0 w-full h-full bg-black bg-opacity-40' />

@@ -96,7 +96,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
         setScreen(screenType);
     };
 
-    useEffect(() => {
+    const fetchLastUser = () => {
         onAuthStateChanged(auth, userData => {
             let email = '';
             if (userData) {
@@ -107,6 +107,10 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
             }
             searchUsers(email);
         });
+    };
+
+    useEffect(() => {
+        fetchLastUser();
     }, []);
 
     return (
