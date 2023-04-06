@@ -69,7 +69,7 @@ const Chat = () => {
 
         setEnableMessagesUpdate(false);
     };
-    
+
     useEffect(() => {
         const height = refChat.current?.scrollHeight;
         refChat.current?.scrollTo(0, height || 0);

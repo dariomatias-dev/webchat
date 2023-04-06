@@ -10,6 +10,7 @@ module.exports = {
       backgroundImage: {
         'background-chat': "url('/images/background-chat.jpg')",
         'background-screen': "url('/images/wallpaper.jpg')",
+        'background-welcome': "url('/images/welcome.jpg')",
       },
     },
   },

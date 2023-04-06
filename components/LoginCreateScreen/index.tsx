@@ -5,6 +5,8 @@ import Form from '../Form';
 import WelcomeImage from '../WelcomeImage';
 
 import { FormDataProps } from '@/@types/FormDataProps';
+import { useState } from 'react';
+import PopupRedefinePassword from '../PopupRedefinePassword';
 
 const screenMessages = {
     login: {
@@ -31,6 +33,7 @@ type Props = {
 };
 
 const LoginCreateScreen = ({ screen, formData }: Props) => {
+    const [popupRedefinePassword, setPopupRedefinePassword] = useState(false);
     const { loginCreateAccountWithGoogle, registerScreen } = useData();
 
     return (
@@ -51,9 +54,13 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
 
                     {
                         screen === 'login' && (
-                            <p className='text-blue-700 hover:text-blue-600 text-sm text-end mt-5 transition duration-300'>
+                            <button
+                                type='button'
+                                onClick={() => setPopupRedefinePassword(true)}
+                                className='text-blue-700 hover:text-blue-600 text-sm text-end mt-5 transition duration-300'
+                            >
                                 Esqueceu a senha?
-                            </p>
+                            </button>
                         )
                     }
 
@@ -94,6 +101,12 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
                     </p>
                 </div>
             </div>
+
+            {
+                popupRedefinePassword && (
+                    <PopupRedefinePassword setPopupRedefinePassword={setPopupRedefinePassword} />
+                )
+            }
         </div>
     );
 };

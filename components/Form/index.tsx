@@ -71,6 +71,7 @@ const Form = ({ formData, screen }: Props) => {
                                 className={`${styles.input} bg-transparent border border-zinc-400 hover:border-zinc-300 focus:border-blue-400 rounded-md outline-none px-2 py-1 transition duration-300`}
                             />
                         </label>
+
                         <span className='text-red-500 text-sm'>
                             {errors.name?.message}
                         </span>
@@ -89,10 +90,12 @@ const Form = ({ formData, screen }: Props) => {
                         className={`${styles.input} bg-transparent border border-zinc-400 hover:border-zinc-300 focus:border-blue-400 rounded-md outline-none px-2 py-1 transition duration-300`}
                     />
                 </label>
+
                 <span className='text-red-500 text-sm'>
                     {errors.email?.message}
                 </span>
             </div>
+
             <div style={screen === 'login' ? { marginTop: '8px' } : { marginTop: '4px' }}>
                 <label className='flex flex-col gap-1'>
                     Senha:
@@ -105,6 +108,7 @@ const Form = ({ formData, screen }: Props) => {
                             style={errors.password ? borderRed : {}}
                             className={`${styles.input} w-full bg-transparent border border-zinc-400 hover:border-zinc-300 focus:border-blue-400 rounded-md outline-none px-2 py-1 transition duration-300`}
                         />
+
                         <button
                             type='button'
                             onClick={() => setbuttonShowPassword(!buttonShowPassword)}
@@ -119,6 +123,7 @@ const Form = ({ formData, screen }: Props) => {
                         </button>
                     </div>
                 </label>
+
                 <span className='text-red-500 text-sm'>
                     {errors.password?.message}
                 </span>
@@ -138,6 +143,7 @@ const Form = ({ formData, screen }: Props) => {
                                     style={errors.confirmPassword ? borderRed : {}}
                                     className={`${styles.input} w-full bg-transparent border border-zinc-400 hover:border-zinc-300 focus:border-blue-400 rounded-md outline-none px-2 py-1 transition duration-300`}
                                 />
+
                                 <button
                                     type='button'
                                     onClick={() => setbuttonShowConfirmationPassword(!buttonShowConfirmationPassword)}
@@ -152,6 +158,7 @@ const Form = ({ formData, screen }: Props) => {
                                 </button>
                             </div>
                         </label>
+
                         <span className='text-red-500 text-sm'>
                             {errors.confirmPassword?.message}
                         </span>
@@ -175,7 +182,7 @@ const Form = ({ formData, screen }: Props) => {
             <button
                 type='submit'
                 style={screen === 'login' ? { marginTop: '24px' } : { marginTop: '20px' }}
-                className='w-full bg-blue-500 bg-opacity-90 hover:bg-opacity-100 font-bold py-2 px-4 rounded-lg transition duration-300'
+                className='w-full bg-blue-500 bg-opacity-80 hover:bg-opacity-100 font-bold py-2 px-4 rounded-lg transition duration-300'
             >
                 {formName}
             </button>
