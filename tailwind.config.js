@@ -9,9 +9,9 @@ module.exports = {
     extend: {
       backgroundImage: {
         'background-chat': "url('/images/background-chat.jpg')",
-      }
+        'background-screen': "url('/images/wallpaper.jpg')",
+      },
     },
   },
   plugins: [],
-}
-
+};

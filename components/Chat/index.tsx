@@ -84,7 +84,10 @@ const Chat = () => {
     return (
         <>
             <div className="w-[600px] h-screen">
-                <div ref={refChat} className="w-full h-full flex flex-col gap-6 pt-10 px-3 pb-28 bg-black overflow-auto scroll-smooth">
+                <div
+                    ref={refChat}
+                    className="w-full h-full flex flex-col gap-6 pt-10 px-3 pb-28 bg-black overflow-auto scroll-smooth"
+                >
                     {
                         messages.map((message: MessagesProps, index) => {
                             return (
@@ -94,12 +97,13 @@ const Chat = () => {
                                     className="flex gap-2"
                                 >
                                     <Image
-                                        src={users[userUid].photoUrl}
+                                        src={users[message.userUid].photoUrl}
                                         width={1000}
                                         height={1000}
                                         alt="User photo."
                                         className="w-10 h-10 rounded-full"
                                     />
+
                                     <div
                                         style={userUid === message.userUid ? { backgroundColor: '#00b5e0', borderTopLeftRadius: '16px', borderTopRightRadius: '0' } : {}}
                                         className="flex flex-col max-w-[70%] bg-zinc-900 py-2 px-4 rounded-tr-2xl rounded-br-2xl rounded-bl-2xl"
@@ -110,6 +114,7 @@ const Chat = () => {
                                         >
                                             {userUid === message.userUid ? 'Você' : users[message.userUid]?.name || 'User'}
                                         </span>
+
                                         <p>
                                             {message.message}
                                         </p>
@@ -123,14 +128,13 @@ const Chat = () => {
 
             <div className='fixed bottom-0 w-full select-none'>
                 <div className='max-w-[600px] flex justify-center items-center gap-4 bg-[#080808] border-t-2 border-zinc-900 mx-auto py-3 px-5'>
-                    <input
-                        type='text'
+                    <textarea
                         value={content}
                         placeholder="Mensagem"
                         onChange={e => setContent(e.target.value)}
-                        onKeyUp={e => e.key === 'Enter' ? sendMessage() : ''}
-                        className={`${styles.input} max-w-[500px] w-[90%] max-h-14 bg-[#141414] text-lg border border-zinc-800 hover:border-zinc-700 focus:border-[#60a5fa] rounded-3xl outline-none px-2 py-5 transition duration-300`}
+                        className={`${styles.input} max-w-[500px] w-[90%] h-14 max-h-32 bg-[#141414] text-lg border border-zinc-800 hover:border-zinc-700 focus:border-[#60a5fa] outline-none pt-3 px-2 transition duration-300`}
                     />
+
                     <AiOutlineSend
                         onClick={() => content ? sendMessage() : ''}
                         style={content ? { cursor: 'pointer' } : { color: '#52525b', cursor: 'not-allowed' }}

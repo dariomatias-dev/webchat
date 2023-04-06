@@ -7,10 +7,30 @@ const Home = () => {
   const { screen } = useData();
 
   return (
-    <div className='fixed top-0 left-0 w-full h-full flex justify-center bg-background-chat'>
-      {screen === 'login' && <Login />}
-      {screen === 'createUser' && <CreateUser />}
-      {screen === 'chat' && <Chat />}
+    <div className='fixed top-0 left-0 w-full h-full flex justify-center'>
+      {
+        screen === 'login' && (
+          <div className="w-full flex justify-center items-center bg-background-screen bg-center">
+            <Login />
+          </div>
+        )
+      }
+
+      {
+        screen === 'createUser' && (
+          <div className="w-full flex justify-center items-center bg-background-screen bg-center">
+            <CreateUser />
+          </div>
+        )
+      }
+
+      {
+        screen === 'chat' && (
+          <div className="w-full h-full flex justify-center items-center bg-background-chat">
+            <Chat />
+          </div>
+        )
+      }
     </div>
   );
 };
