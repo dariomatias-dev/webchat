@@ -91,7 +91,6 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
         });
         setUsers(usersData);
     };
-
     const registerScreen = (screenType: string) => {
         setScreen(screenType);
     };
@@ -111,7 +110,7 @@ export const ProviderData = ({ children }: ProviderDataProps) => {
 
     useEffect(() => {
         fetchLastUser();
-    });
+    }, []);
 
     return (
         <ContextData.Provider value={{

@@ -69,7 +69,7 @@ const Chat = () => {
 
         setEnableMessagesUpdate(false);
     };
-
+    
     useEffect(() => {
         const height = refChat.current?.scrollHeight;
         refChat.current?.scrollTo(0, height || 0);
@@ -97,7 +97,7 @@ const Chat = () => {
                                     className="flex gap-2"
                                 >
                                     <Image
-                                        src={users[message.userUid].photoUrl}
+                                        src={users[message.userUid]?.photoUrl || '/images/photoUserUndefined.jpg'}
                                         width={1000}
                                         height={1000}
                                         alt="User photo."
