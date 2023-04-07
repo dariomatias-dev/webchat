@@ -23,11 +23,15 @@ const Chat = () => {
     const { userUid, users } = useData();
 
     const refChat = useRef<HTMLDivElement>(null);
+    const refTextArea = useRef<HTMLTextAreaElement>(null);
+
+    const currentHeightTextArea = content.trim() ? refTextArea.current?.scrollHeight || 54 : 54;
+    const heightTextArea = currentHeightTextArea > 124 ? 124 : currentHeightTextArea;
 
     const sendMessage = () => {
         addDoc(collection(db, 'messages'), {
             userUid,
-            message: content,
+            message: content.trim(),
             send: new Date(),
         });
         setContent('');
@@ -70,9 +74,14 @@ const Chat = () => {
         setEnableMessagesUpdate(false);
     };
 
-    useEffect(() => {
+    const scrollDownAutomatically = () => {
         const height = refChat.current?.scrollHeight;
         refChat.current?.scrollTo(0, height || 0);
+    };
+    scrollDownAutomatically();
+
+    useEffect(() => {
+        scrollDownAutomatically()
         if (messages.length && enableMessagesUpdate)
             updateMessages();
     }, [messages, enableMessagesUpdate]);
@@ -86,7 +95,8 @@ const Chat = () => {
             <div className="w-[600px] h-screen">
                 <div
                     ref={refChat}
-                    className="w-full h-full flex flex-col gap-6 pt-10 px-3 pb-28 bg-black overflow-auto scroll-smooth"
+                    style={{ paddingBottom: `${heightTextArea + 60}px` }}
+                    className="w-full h-full flex flex-col gap-6 pt-10 px-3 bg-black overflow-auto scroll-smooth"
                 >
                     {
                         messages.map((message: MessagesProps, index) => {
@@ -131,12 +141,15 @@ const Chat = () => {
                     <textarea
                         value={content}
                         placeholder="Mensagem"
+                        ref={refTextArea}
+                        maxLength={1024}
                         onChange={e => setContent(e.target.value)}
-                        className={`${styles.input} max-w-[500px] w-[90%] h-14 max-h-32 bg-[#141414] text-lg border border-zinc-800 hover:border-zinc-700 focus:border-[#60a5fa] outline-none pt-3 px-2 transition duration-300`}
+                        style={{ height: `${heightTextArea + 2}px` }}
+                        className={`${styles.input} max-w-[500px] w-[90%] min-h-[56px] max-h-32 bg-[#141414] text-lg border border-zinc-800 hover:border-zinc-700 focus:border-[#60a5fa] outline-none pt-3 px-2 pb-3 transition duration-300`}
                     />
 
                     <AiOutlineSend
-                        onClick={() => content ? sendMessage() : ''}
+                        onClick={() => content.trim() ? sendMessage() : ''}
                         style={content ? { cursor: 'pointer' } : { color: '#52525b', cursor: 'not-allowed' }}
                         className="w-8 h-8 right-2 bottom-4 text-zinc-400 hover:text-white transition duration-300"
                     />
