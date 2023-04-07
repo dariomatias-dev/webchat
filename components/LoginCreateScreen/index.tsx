@@ -38,14 +38,14 @@ const LoginCreateScreen = ({ screen, error, formData }: Props) => {
     const { loginCreateAccountWithGoogle, registerScreen } = useData();
 
     return (
-        <div className='w-[850px] h-[550px] flex justify-center rounded-xl mx-8 select-none overflow-hidden'>
+        <div className='w-[850px] md:h-[550px] flex justify-center rounded-xl mx-8 select-none overflow-hidden'>
             <div className='md:w-2/4 hidden md:flex'>
                 <WelcomeImage message={screenMessages[screen as keyof typeof screenMessages].welcome} />
             </div>
 
             <div
                 style={screen === 'login' ? { alignItems: 'center' } : {}}
-                className='w-[400px] md:w-2/4 flex justify-center bg-[#1C1C1C] rounded-xl md:rounded-none overflow-auto'
+                className='w-[400px] md:w-2/4 flex justify-center bg-[#1C1C1C] rounded-xl md:rounded-none md:overflow-auto'
             >
                 <div className='w-full px-8'>
                     <Form
@@ -90,7 +90,7 @@ const LoginCreateScreen = ({ screen, error, formData }: Props) => {
                         </button>
                     </div>
 
-                    <p className='flex justify-center gap-1 text-zinc-400 text-sm text-center pb-4'>
+                    <p className='flex justify-center gap-1 text-zinc-400 text-sm text-center pb-6'>
                         {screenMessages[screen as keyof typeof screenMessages].changeScreen.part1}
 
                         <button

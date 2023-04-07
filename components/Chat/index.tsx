@@ -25,8 +25,8 @@ const Chat = () => {
     const refChat = useRef<HTMLDivElement>(null);
     const refTextArea = useRef<HTMLTextAreaElement>(null);
 
-    const currentHeightTextArea = content.trim() ? refTextArea.current?.scrollHeight || 54 : 54;
-    const heightTextArea = currentHeightTextArea > 124 ? 124 : currentHeightTextArea;
+    const height = refChat.current?.scrollHeight;
+    refChat.current?.scrollTo(0, height || 0);
 
     const sendMessage = () => {
         addDoc(collection(db, 'messages'), {
@@ -74,14 +74,10 @@ const Chat = () => {
         setEnableMessagesUpdate(false);
     };
 
-    const scrollDownAutomatically = () => {
-        const height = refChat.current?.scrollHeight;
-        refChat.current?.scrollTo(0, height || 0);
-    };
-    scrollDownAutomatically();
+    const currentHeightTextArea = content.trim() ? refTextArea.current?.scrollHeight || 54 : 54;
+    const heightTextArea = currentHeightTextArea > 124 ? 124 : currentHeightTextArea;
 
     useEffect(() => {
-        scrollDownAutomatically()
         if (messages.length && enableMessagesUpdate)
             updateMessages();
     }, [messages, enableMessagesUpdate]);
@@ -119,8 +115,8 @@ const Chat = () => {
                                         className="flex flex-col max-w-[70%] bg-zinc-900 py-2 px-4 rounded-tr-2xl rounded-br-2xl rounded-bl-2xl"
                                     >
                                         <span
-                                            style={userUid === message.userUid ? { color: '#FFFFFF' } : {}}
-                                            className='text-zinc-300 text-end'
+                                            style={userUid === message.userUid ? { color: '#FFFFFF', textAlign: 'end' } : {}}
+                                            className='text-zinc-300'
                                         >
                                             {userUid === message.userUid ? 'Você' : users[message.userUid]?.name || 'User'}
                                         </span>

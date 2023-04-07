@@ -50,7 +50,7 @@ const Form = ({ screen, error, formData }: Props) => {
     return (
         <form onSubmit={handleSubmit(sendFormData)}>
             <h2
-                style={screen === 'createUser' ? { marginTop: '24px', marginBottom: '12px' } : {}}
+                style={screen === 'createUser' ? { marginTop: '24px', marginBottom: '12px' } : { marginTop: '20px', marginBottom: '6px' }}
                 className='text-2xl text-center font-bold'
             >
                 {formName}
