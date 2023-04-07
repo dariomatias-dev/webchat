@@ -29,10 +29,11 @@ const screenMessages = {
 
 type Props = {
     screen: string;
+    error: string;
     formData: (data: FormDataProps) => void;
 };
 
-const LoginCreateScreen = ({ screen, formData }: Props) => {
+const LoginCreateScreen = ({ screen, error, formData }: Props) => {
     const [popupRedefinePassword, setPopupRedefinePassword] = useState(false);
     const { loginCreateAccountWithGoogle, registerScreen } = useData();
 
@@ -48,8 +49,9 @@ const LoginCreateScreen = ({ screen, formData }: Props) => {
             >
                 <div className='w-full px-8'>
                     <Form
-                        formData={formData}
                         screen={screen}
+                        error={error}
+                        formData={formData}
                     />
 
                     {

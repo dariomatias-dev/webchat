@@ -95,7 +95,7 @@ const Chat = () => {
             <div className="w-[600px] h-screen">
                 <div
                     ref={refChat}
-                    style={{ paddingBottom: `${heightTextArea + 60}px` }}
+                    style={{ paddingBottom: `${heightTextArea + 52}px` }}
                     className="w-full h-full flex flex-col gap-6 pt-10 px-3 bg-black overflow-auto scroll-smooth"
                 >
                     {

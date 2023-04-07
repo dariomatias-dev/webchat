@@ -12,18 +12,18 @@ const schema = yup.object({
     email: yup.string().email().required('O email é obrigatório.'),
     password: yup.string().min(6, 'A senha precisa ter 6 ou mais caracteres.').required('A senha é obrigatória.'),
     confirmPassword: yup.string().min(6, 'A confirmação da senha precisa ter 6 ou mais caracteres.').oneOf([yup.ref('password')], 'As senhas precisam ser iguais.'),
-    keepConnected: yup.boolean().optional(),
 }).required();
 
 
 type Props = {
     screen: string;
+    error: string;
     formData: (data: FormDataProps) => void;
 };
 
 const borderRed = { borderColor: '#FF0000' };
 
-const Form = ({ formData, screen }: Props) => {
+const Form = ({ screen, error, formData }: Props) => {
     const [buttonShowPassword, setbuttonShowPassword] = useState(false);
     const [buttonShowConfirmationPassword, setbuttonShowConfirmationPassword] = useState(false);
 
@@ -39,7 +39,6 @@ const Form = ({ formData, screen }: Props) => {
             email: '',
             password: '',
             confirmPassword: '',
-            keepConnected: false,
         });
     };
 
@@ -166,18 +165,9 @@ const Form = ({ formData, screen }: Props) => {
                 )
             }
 
-            {
-                screen === 'login' && (
-                    <label className='flex items-center gap-1 text-zinc-400 text-sm mt-4 cursor-pointer'>
-                        <input
-                            type="checkbox"
-                            {...register('keepConnected')}
-                            className='w-[14px] h-[14px] mt-[2px]'
-                        />
-                        Manter conectado após sair
-                    </label>
-                )
-            }
+            <span className='inline-block text-sm text-red-600 mt-4'>
+                {error}
+            </span>
 
             <button
                 type='submit'
