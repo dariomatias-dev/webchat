@@ -75,7 +75,20 @@ const Chat = () => {
     };
 
     const currentHeightTextArea = content.trim() ? refTextArea.current?.scrollHeight || 54 : 54;
-    const heightTextArea = currentHeightTextArea > 124 ? 124 : currentHeightTextArea;
+    const heightTextArea = () => {
+        if (currentHeightTextArea <= 124) {
+            if (currentHeightTextArea === 54)
+                return 54;
+            else if (currentHeightTextArea === 80)
+                return 80;
+            else if(currentHeightTextArea === 108)
+                return 108;
+            else
+                return 124
+        } else {
+            return 124;
+        }
+    };
 
     useEffect(() => {
         if (messages.length && enableMessagesUpdate)
@@ -91,7 +104,7 @@ const Chat = () => {
             <div className="w-[600px] h-screen">
                 <div
                     ref={refChat}
-                    style={{ paddingBottom: `${heightTextArea + 52}px` }}
+                    style={{ paddingBottom: `${heightTextArea() + 52}px` }}
                     className="w-full h-full flex flex-col gap-6 pt-10 px-3 bg-black overflow-auto scroll-smooth"
                 >
                     {
@@ -140,7 +153,7 @@ const Chat = () => {
                         ref={refTextArea}
                         maxLength={1024}
                         onChange={e => setContent(e.target.value)}
-                        style={{ height: `${heightTextArea + 2}px` }}
+                        style={{ height: `${heightTextArea()}px` }}
                         className={`${styles.input} max-w-[500px] w-[90%] min-h-[56px] max-h-32 bg-[#141414] text-lg border border-zinc-800 hover:border-zinc-700 focus:border-[#60a5fa] outline-none pt-3 px-2 pb-3 transition duration-300`}
                     />
 
