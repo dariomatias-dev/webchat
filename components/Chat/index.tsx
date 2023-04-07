@@ -76,18 +76,10 @@ const Chat = () => {
 
     const currentHeightTextArea = content.trim() ? refTextArea.current?.scrollHeight || 54 : 54;
     const heightTextArea = () => {
-        if (currentHeightTextArea <= 124) {
-            if (currentHeightTextArea === 54)
-                return 54;
-            else if (currentHeightTextArea === 80)
-                return 80;
-            else if(currentHeightTextArea === 108)
-                return 108;
-            else
-                return 124
-        } else {
-            return 124;
-        }
+        if (window.screen.width <= 600)
+            return 54;
+        else
+            return currentHeightTextArea > 124 ? 124 : currentHeightTextArea;
     };
 
     useEffect(() => {
