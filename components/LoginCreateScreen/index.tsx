@@ -13,7 +13,7 @@ const screenMessages = {
         welcome: 'Faça login para acessar o WebChat.',
         connect: 'Ou Login com',
         changeScreen: {
-            part1: 'Não possue uma conta?',
+            part1: 'Não possui uma conta?',
             parte2: 'Crie uma agora',
         },
     },
@@ -21,7 +21,7 @@ const screenMessages = {
         welcome: 'Crie uma conta para acessar o WebChat.',
         connect: 'Ou criar com',
         changeScreen: {
-            part1: 'Possue uma conta?',
+            part1: 'Possui uma conta?',
             parte2: 'Entre nela agora',
         },
     },
